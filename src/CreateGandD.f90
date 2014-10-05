@@ -1,6 +1,5 @@
 !   AUTHOR:  Frantisek Gallovic
     
-    
     SUBROUTINE CreateGandD()
     USE SISVDmodule
     IMPLICIT NONE
@@ -167,7 +166,6 @@
         
     CONTAINS
 
-! NEW - FILTERING AND INTEGRATING IN THE TIME DOMAIN
     SUBROUTINE CreateH()
     USE SISVDmodule
     IMPLICIT NONE
@@ -203,7 +201,7 @@
 
     dtr4=dt
     j=0
-    write(*,*)'  (Correcting GFs for artifical time delay of',artifDT,'sec.)'
+    write(*,*)'  (Correcting GFs for artifical time delay by',artifDT,'sec.)'
     do jj=1,NRseis
       f1r4=fc2(fcsta(jj));f2r4=fc3(fcsta(jj))
       do k=1,3
@@ -294,7 +292,7 @@
 
     else
 
-      Uvec=matmul(H,tfin);   !POZOR, v pripade hlazeni by se melo jeste LP filtrovat, jelikoz Greenovky jsou jen HP filtrovane
+      Uvec=matmul(H,tfin);
       
       open(296,FILE='rvseisnez.dat')
       do i=1,nT
@@ -431,10 +429,10 @@
     open(296,FILE='inputtfslip2D.dat')
     do j=1,NW
       write(296,'(1000E13.5)')(sum(timefunc(:,i,j))*dt,i=1,NL),sum(timefunc(:,NL,j))*dt
-!      write(296,'(1000E13.5)')(sum(timefunc(:,i,j))*dt*mu(i,j)*elem,i=1,NL),sum(timefunc(:,NL,j))*dt*mu(NL,j)*elem
+!      write(296,'(1000E13.5)')(sum(timefunc(:,i,j))*dt*mu(i,j)*elem,i=1,NL),sum(timefunc(:,NL,j))*dt*mu(NL,j)*elem     !Output is scalar moment instead of slip
     enddo
     write(296,'(1000E13.5)')(sum(timefunc(:,i,NW))*dt,i=1,NL),sum(timefunc(:,NL,NW))*dt
-!    write(296,'(1000E13.5)')(sum(timefunc(:,i,NW))*dt*mu(i,NW)*elem,i=1,NL),sum(timefunc(:,NL,NW))*dt*mu(NL,NW)*elem
+!    write(296,'(1000E13.5)')(sum(timefunc(:,i,NW))*dt*mu(i,NW)*elem,i=1,NL),sum(timefunc(:,NL,NW))*dt*mu(NL,NW)*elem   !Output is scalar moment instead of slip
     write(296,*);write(296,*)
     do j=1,NW
       write(296,'(1000E13.5)')ruptime(1:NL,j),ruptime(NL,j)
@@ -451,7 +449,7 @@
     SUBROUTINE fillcovarmatrix()
     USE SISVDmodule
     IMPLICIT NONE
-    INTEGER, PARAMETER:: AA=2 !(AntiAlias for cross-correlation function)
+    INTEGER, PARAMETER:: AA=2 !(Antialias for cross-correlation function)
     INTEGER FFT3D(3)
     COMPLEX*16,ALLOCATABLE:: CMtime(:),CMspace(:,:),CMst(:,:,:)
     INTEGER NLFFT,NWFFT,NPFFT
@@ -569,9 +567,9 @@
 !goto 10
 
     open(111,FILE='CMaprior.dat')
-	do i=1,Msvd
-	  write(111,*)sqrt(CM(i,i))
-	enddo
+	  do i=1,Msvd
+	    write(111,*)sqrt(CM(i,i))
+	  enddo
     close(111)
 
     open(111,FILE='mtildeslip2D-aprior-stddev.dat')
@@ -598,6 +596,7 @@
     enddo
 #else
     write(*,*)'!!!!!!!!!!!!!!!!!!!!!!!Not yet coded!!!!!!!!!!!!!!!!!!!!!!!'
+    stop
 !    CMinv=CM
 !    CALL cholsl(Msvd,CMinv,CM)
 #endif
@@ -615,6 +614,7 @@
     END
 
 
+! ABSOLETE - not used anymore
 
     SUBROUTINE filtconstruct(flt,N,flo,fleft,fright,fro,dt)
     IMPLICIT NONE

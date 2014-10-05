@@ -66,7 +66,8 @@
     read(10,*)
     read(10,*) leng,widt
     read(10,*)
-    read(10,*) epicW,epicL
+    write(*,*) '  (Warning! Assumig epicL, epicW in input.dat!)'
+    read(10,*) epicL,epicW
     read(10,*)
     read(10,*) np
     read(10,*)
