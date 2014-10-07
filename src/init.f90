@@ -17,7 +17,7 @@
       INTEGER NL,NW,nfmax,NRseis,NRgps,np
       REAL*8 T,TS,T1,T2,T0,artifDT,Mfix,strike,dip,hypodepth,leng,widt,epicW,epicL,vr
       INTEGER iT1,iT2,nT,iT0
-      REAL*8,ALLOCATABLE,DIMENSION(:):: fc1,fc2,fc3,fc4
+      REAL*8,ALLOCATABLE,DIMENSION(:):: fc1,fc2
       INTEGER,ALLOCATABLE,DIMENSION(:):: fcsta
       INTEGER nfc
       REAL*8 dt,df,dL,dW,elem
@@ -74,9 +74,9 @@
     read(10,*) vr
     read(10,*)
     read(10,*) nfc   !number of frequency bands
-    allocate(fc1(nfc),fc2(nfc),fc3(nfc),fc4(nfc))
+    allocate(fc1(nfc),fc2(nfc))
     do i=1,nfc
-      read(10,*) fc1(i),fc2(i),fc3(i),fc4(i)
+      read(10,*) fc1(i),fc2(i)
     enddo
     close(10)
     dL=leng/dble(NL)

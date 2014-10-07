@@ -76,7 +76,8 @@ c++++++++++
          rho(ic)=rho(ic)*1000.
       enddo
 c      open (in2,form='formatted',file='source.dat')
-      open (in3,form='formatted',file='station.dat')
+c      open (in3,form='formatted',file='station.dat')
+      open (in3,form='formatted',file='stations.dat')
       
       write(out,input)
       write(out,*) 'hc,vp,vs,rho,Qp,Qs'
@@ -197,7 +198,7 @@ c+++++++++++++
       stop
       endif
       
- 1001 format(8f9.3)
+ 1001 format(8f10.3)
       write(*,*) if
  10   continue
       
@@ -458,8 +459,8 @@ c xs(is)=xs(is)-xs(is)
 c ys(is)=ys(is)-ys(is)
 c zs(is)=zs(is)-zs(is)
       enddo
-      read(in3,*)
-      read(in3,*)
+c      read(in3,*)
+c      read(in3,*)
       do ir=1,nr
 	read(in3,*) xr(ir),yr(ir),zr(ir)
          xr(ir)=xr(ir)*1000.

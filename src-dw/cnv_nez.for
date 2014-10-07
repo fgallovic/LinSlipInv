@@ -62,7 +62,8 @@ c pro posun vlevo dej vhodne dt0<0
        stop
       endif
 c      open (13,form='formatted',file='source.dat')
-      open (14,form='formatted',file='station.dat')
+c      open (14,form='formatted',file='station.dat')
+      open (14,form='formatted',file='stations.dat')
 c      open (15,form='formatted',file='mechan.dat')
       open(130,file='dirac.dat')
       open(210,file='dat/'//trim(infile)//'.nez')
@@ -154,8 +155,8 @@ c 	read(15,*) strike(is),dip(is),rake(is)
 cccccc
        delay(is)=delay(is)+dt0
       enddo  !konec cyklu pres zdroje
-      read(14,*)
-      read(14,*)
+c      read(14,*)
+c      read(14,*)
       do ir=1,nr   !cykl pres prijimace,    jen cteni polohy
        read(14,*) xr(ir),yr(ir),zr(ir)
         xr(ir)=xr(ir)*1000.
@@ -342,7 +343,7 @@ c vystup ve frekvencich
 	uz(1:nt,ir)=uz(1:nt,ir)*tkrok
       do 1040 it=1,nfreq+1
       time=float(it-1)*dfreq
-      write(nofl,'(7(1x,e12.6))')
+      write(nofl,'(7(1x,e13.6))')
      *   time,real(ux(it,ir)),real(uy(it,ir)),real(uz(it,ir)),
      *   imag(ux(it,ir)),imag(uy(it,ir)),imag(uz(it,ir))
  1040 continue

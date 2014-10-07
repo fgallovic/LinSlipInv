@@ -65,18 +65,17 @@ nc=0;  !set up formal value that are actualy not used by Axitra (they are readed
 write(2,input)
 close(2)
 
-open(4,file='station.dat')
-open(5,file='stations.dat')
-write(4,*) 'Station co-ordinates'
-write(4,*) 'x(N>0,km),y(E>0,km),z(km),azim.,dist.,stat.'
-do i=1,nr
-  read(5,*) Stat(:) !,rec
-  write(4,20) Stat(:),0.
-enddo
-write(4,'(A1)') char(26)
-20 format(2x,f12.4,2x,f12.4,2x,f5.4,2x,f9.4,2x,f9.4,2x,i3)
-close(4)
-close(5)
+!open(4,file='station.dat')
+!open(5,file='stations.dat')
+!write(4,*) 'Station co-ordinates'
+!write(4,*) 'x(N>0,km),y(E>0,km),z(km)'
+!do i=1,nr
+!  read(5,*) Stat(:) !,rec
+!  write(4,*) Stat(:),0.
+!enddo
+!write(4,'(A1)') char(26)
+!close(4)
+!close(5)
     
 NEZhypo(1)=0.
 NEZhypo(2)=0.

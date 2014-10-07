@@ -203,7 +203,7 @@
     j=0
     write(*,*)'  (Correcting GFs for artifical time delay by',artifDT,'sec.)'
     do jj=1,NRseis
-      f1r4=fc2(fcsta(jj));f2r4=fc3(fcsta(jj))
+      f1r4=fc1(fcsta(jj));f2r4=fc2(fcsta(jj))
       do k=1,3
         if(stainfo(k,jj)==0)cycle
         j=j+1
