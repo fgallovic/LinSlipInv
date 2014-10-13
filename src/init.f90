@@ -1,13 +1,5 @@
-!ZMENY V INPUT.DAT:
-!vymazany radku:
-!    - glen,gwidt
-!    - vp, vs, rho
-!    - pmax    idum
-!    - koef
-!    - Kappa
-!pridan jako treti radek (po delce okna)
-!     - Artificial time shift
-
+!   Truncated SVD solution of the Linear slip inversion problem
+!   Requires as an input the output from SlipInvSVD1
 !   AUTHOR:  Frantisek Gallovic
 
     MODULE SISVDmodule
@@ -209,7 +201,7 @@
       dt=1.d0
       df=1.d0
       np=0
-      Ssvd=1                     !Slip value
+      Ssvd=1                      !Slip value
     endif
 
     Msvd=NW*NL*Ssvd               !number of model parameters
@@ -236,7 +228,7 @@
       Nslip=0
     endif
     
-    Nsvd=Nseis+Ngps+1+Nsmooth+Nslip    !number of Greens functions samples
+    Nsvd=Nseis+Ngps+1+Nsmooth+Nslip
 
 	if(minSVDchoice==1)then
 	  minMNsvd=min(Msvd,Nsvd)

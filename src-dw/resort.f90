@@ -15,6 +15,8 @@ read(5,*) nfmax
 read(5,*)
 read(5,*) T
 read(5,*)
+read(5,*)
+read(5,*)
 read(5,*) nr
 read(5,*)
 read(5,*) gn2,gn1

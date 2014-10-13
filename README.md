@@ -1,23 +1,36 @@
 #LinSlipInv
-===========
+-----------
 
-Linear multi time-window earthquake slip inversion with k^-2 smoothing
+Linear multi time-window earthquake slip inversion with *k*^-2 smoothing
 
 This code is a suite of codes for linear slip inversions and resolution analysis.
 
 ####Capabilities of the codes:
- - inversion of provided data for a given fault geometry
- - resolution analysis by means of synthetic tests with prescribed target rupture model or slip-rate pulse model
- - inversion in-depth analysis by means of spectral analysis of the forward matrix **G**.
+ - Inversion of provided data for a given fault geometry
+ - Resolution analysis by means of synthetic tests with prescribed target rupture model or slip-rate pulse model
+ - Inversion in-depth analysis by means of spectral analysis of the forward matrix **G**
+ - Can take advantage of Intel MKL library and/or CULA (GPU) for faster performance
+ - Plotting the results
 
-####Implemented data types for inversions:
- - seismic waveforms including processed HR-GPS
- - static GPS vectors
+####Possible data types for inversions:
+ - Seismic waveforms including processed HR-GPS
+ - Static GPS vectors
 
 ####Implemented regularizations of the inversion:
- - truncated SVD
- - spatial *k*^-2 prior covariance function
+ - Truncated SVD
+ - Spatial *k*^-2 prior covariance function
 
 ####Included codes for evaluation of Green's functions:
  - Axitra (full-wavefield in 1D layered media)
  - Okada (static displacements in homogeneous halfspace)
+
+------------
+
+###Content of directories:
+ - `src` - Inversion codes
+ - `src-stations` - Converts stations locations from lat,long to X,Y (X points towards north, Y towards east)
+ - `src-dw` - Axitra code for Green's function calculations
+ - `src-graphics` - Codes for generating graphics (requires Gnuplot)
+ - `examples` - Several examples for testing the code
+ - `papers` - Papers related to the inversion codes, explaining basics of the SVD and NNLS approaches, resolution analysis, etc.
+ 

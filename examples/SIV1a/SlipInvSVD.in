@@ -1,0 +1,14 @@
+Data (1 = synthetic data, 0 = read from files)
+0
+Std.dev for slip velocity (0. = no smoothing), Std.dev for GF's, Weight of GPS, Weight of M0 constraint (0. = not applied), Weight of additional constraint
+1.d0  0.01  .1d0   1.d0   0.d0
+Station component weights (0 = distance-dependent weights, 1 = no distance dep.w.)
+1
+Choice of use of eigenvectors (see further)
+1
+1: defined minimum singular value, 2: defined min and max number of eigenvectors to be taken into account
+100.
+Additional temporal shift (in sec)
+0.
+Compact SVD (0=NO, 1=YES - then it is not possible to use ANNLS)
+1

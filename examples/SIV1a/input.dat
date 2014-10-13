@@ -1,0 +1,27 @@
+No. of computed frequencies (should be larger than half of the temporal discretization)
+130
+Length of seismograms, slip rate time window, start and end time for waveform comparison (sec)
+102.4 10. 30. 70.
+Artificial time shift (sec)
+30.
+Number of recievers (waveforms, GPS)
+56  0
+Spatial discretization along strike and dip
+35 20
+Scalar seismic moment (Nm)
+1.06d19
+Strike  Dip   Rake
+90.    80.   180.
+Depth of fault reference point (m)
+10.
+Length and width of the fault (m)
+35000.   20000.
+Position of reference point on the fault (m)
+17500.   20000.
+Temporal discretization
+256
+Rupture velocity (m/s)
+3000
+Number of filter ranges, followed by corner frequencies
+1
+0.05   .5
