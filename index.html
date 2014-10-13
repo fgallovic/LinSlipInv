@@ -31,23 +31,50 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a name="project-description" class="anchor" href="#project-description"><span class="octicon octicon-link"></span></a>Project description</h3>
+        <h1>
+<a name="linslipinv" class="anchor" href="#linslipinv"><span class="octicon octicon-link"></span></a>LinSlipInv</h1>
 
-<p>The project consists of several subprojects that share parts of the codes.</p>
+<hr>
 
-<h1>
-<a name="calculation-of-greens-functions-using-axitra-see-src-dw-directory" class="anchor" href="#calculation-of-greens-functions-using-axitra-see-src-dw-directory"><span class="octicon octicon-link"></span></a>Calculation of Green's functions using Axitra (see <code>src-dw</code> directory):</h1>
+<p>Linear multi time-window earthquake slip inversion with <em>k</em>^-2 smoothing</p>
 
-<pre><code>$ ./firststep
-$ ./calculate
-</code></pre>
+<p>Suite of codes for linear slip inversions and resolution analysis.</p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<h4>
+<a name="capabilities-of-the-codes" class="anchor" href="#capabilities-of-the-codes"><span class="octicon octicon-link"></span></a>Capabilities of the codes:</h4>
 
-<p>Contact me via email <a href="mailto:gallovic@karel.troja.mff.cuni.cz">gallovic@karel.troja.mff.cuni.cz</a>.
-You are also welcome to check out my webpage at <a href="http://geo.mff.cuni.cz/%7Egallovic">http://geo.mff.cuni.cz/~gallovic</a>.</p>
+<ul>
+<li>Inversion of provided data for a given fault geometry</li>
+<li>Resolution analysis by means of synthetic tests with prescribed target rupture model or slip-rate pulse model</li>
+<li>Inversion in-depth analysis by means of spectral analysis of the forward matrix <strong>G</strong>
+</li>
+<li>Can take advantage of Intel MKL library and/or CULA (GPU) for faster performance</li>
+<li>Plotting the results</li>
+</ul>
+
+<h4>
+<a name="possible-data-types-for-inversions" class="anchor" href="#possible-data-types-for-inversions"><span class="octicon octicon-link"></span></a>Possible data types for inversions:</h4>
+
+<ul>
+<li>Seismic waveforms including processed HR-GPS</li>
+<li>Static GPS vectors</li>
+</ul>
+
+<h4>
+<a name="implemented-regularizations-of-the-inversion" class="anchor" href="#implemented-regularizations-of-the-inversion"><span class="octicon octicon-link"></span></a>Implemented regularizations of the inversion:</h4>
+
+<ul>
+<li>Truncated SVD</li>
+<li>Spatial <em>k</em>^-2 prior covariance function</li>
+</ul>
+
+<h4>
+<a name="included-codes-for-evaluation-of-greens-functions" class="anchor" href="#included-codes-for-evaluation-of-greens-functions"><span class="octicon octicon-link"></span></a>Included codes for evaluation of Green's functions:</h4>
+
+<ul>
+<li>Axitra (full-wavefield in 1D layered media)</li>
+<li>Okada (static displacements in homogeneous halfspace)</li>
+</ul>
       </section>
     </div>
 
