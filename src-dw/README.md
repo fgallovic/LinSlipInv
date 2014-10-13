@@ -5,7 +5,7 @@ Code based on discrete wavenumber method providing full-wavefield Green's functi
 (Kennett and Kerry, 1979; Bouchon, 1981; Coutant, 1989).
 
 The code was originally written by O. Coutant.
-Additional modifications have been made by J. ZahradnÌk, J. Burj·nek and F. GalloviË.
+Additional modifications have been made by J. Zahradn√≠k, J. Burj√°nek and F. Galloviƒç.
 
 ###How to run the code
 ```
@@ -18,8 +18,8 @@ The result should be all Green's functions gathered in file `NEZsor.dat` require
 
 ###References:
 - Kennett, B. L. N., and N. J. Kerry (1979). Seismic waves in a stratified half
-space, Geophys. J. Roy. Astron. Soc. 57, 557ñ583.
-- Bouchon, M. (1981). A simple method to calculate Greenís functions for
-elastic layered media, Bull. Seismol. Soc. Am. 71, 959ñ971.
+space, Geophys. J. Roy. Astron. Soc. 57, 557‚Äì583.
+- Bouchon, M. (1981). A simple method to calculate Green‚Äôs functions for
+elastic layered media, Bull. Seismol. Soc. Am. 71, 959‚Äì971.
 - Coutant, O. (1989). Program of Numerical Simulation AXITRA, Research
 Report, Lab. de Geophys. Interne et Tectonophys., Grenoble, France
