@@ -3,7 +3,7 @@
 
 Linear multi time-window earthquake slip inversion with *k*^-2 smoothing
 
-This code is a suite of codes for linear slip inversions and resolution analysis.
+Suite of codes for linear slip inversions and resolution analysis.
 
 ####Capabilities of the codes:
  - Inversion of provided data for a given fault geometry

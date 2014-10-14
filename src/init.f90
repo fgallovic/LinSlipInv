@@ -173,7 +173,7 @@
     sourZgps=sourZgps*1.e3
 
 !Applying distance dependent weigths
-    if(compweights==0)then
+    if(compweights==2)then
        write(*,*)'  (Applying distance-dependent weigths)'
        open(10,FILE='stations.dat')
        open(11,FILE='stainfo.out')

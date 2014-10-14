@@ -51,8 +51,8 @@
       deallocate(H,Uvec)
 ! If smoothing is on, apply general std.dev for matrix G - same as taking into account diagonal CD
       if(abs(smoothkoef)>0.d0)then
-        G(1:Nseis,:)=G(1:Nseis,:)/sum(1.d0/normdat)*sum(staweight(:,:)*dble(stainfo(:,:)))/smoothkoefGF
-        D(1:Nseis)=D(1:Nseis)/sum(1.d0/normdat)*sum(staweight(:,:)*dble(stainfo(:,:)))/smoothkoefGF
+        G(1:Nseis,:)=G(1:Nseis,:)/sum(1.d0/normdat(:))*sum(staweight(:,:)*dble(stainfo(:,:)))/smoothkoefGF
+        D(1:Nseis)=D(1:Nseis)/sum(1.d0/normdat(:))*sum(staweight(:,:)*dble(stainfo(:,:)))/smoothkoefGF
       endif
 !    write(*,*)'  (Mean sigma CD = ',sum(normdat)/dble(NSTAcomp),')'
     endif

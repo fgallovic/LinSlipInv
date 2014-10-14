@@ -157,7 +157,7 @@
       enddo
       close(111)
       open(111,FILE='mtildeslip2D-stddev.dat')
-      write(*,*)sqrt(sum(CM))*dt/dble(Msvd)   !standard deviation of the slip
+!      write(*,*)sqrt(sum(CM))*dt/dble(Msvd)   !standard deviation of the slip
       do j=1,NW
         dumi=(j-1)*NL*Ssvd
         write(111,'(1000E13.5)')(sqrt(sum(CM(dumi+(i-1)*Ssvd+1:dumi+i*Ssvd,dumi+(i-1)*Ssvd+1:dumi+i*Ssvd)))*dt,i=1,NL),sqrt(sum(CM(dumi+(NL-1)*Ssvd+1:dumi+NL*Ssvd,dumi+(NL-1)*Ssvd+1:dumi+NL*Ssvd)))*dt  !støední odchylka skluzu

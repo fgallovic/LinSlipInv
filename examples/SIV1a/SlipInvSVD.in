@@ -2,7 +2,7 @@ Data (1 = synthetic data, 0 = read from files)
 0
 Std.dev for slip velocity (0. = no smoothing), Std.dev for GF's, Weight of GPS, Weight of M0 constraint (0. = not applied), Weight of additional constraint
 1.d0  0.01  .1d0   1.d0   0.d0
-Station component weights (0 = distance-dependent weights, 1 = no distance dep.w.)
+Station component weights (1 = no distance dep.w., 2 = distance-dependent weights)
 1
 Choice of use of eigenvectors (see further)
 1
