@@ -29,7 +29,7 @@ Suite of codes for linear slip inversions and resolution analysis.
 ###Content of directories:
  - `src` - Inversion codes
  - `src-stations` - Converts stations locations from lat,long to X,Y (X points towards north, Y towards east)
- - `src-dw` - Axitra code for Green's function calculations
+ - `src-dwn` - Axitra code for Green's function calculations
  - `src-graphics` - Codes for generating graphics (requires Gnuplot)
  - `examples` - Several examples for testing the code
  - `papers` - Papers related to the inversion codes, explaining basics of the SVD and NNLS approaches, resolution analysis, etc.

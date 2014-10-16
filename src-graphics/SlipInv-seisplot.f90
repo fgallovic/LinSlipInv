@@ -36,14 +36,14 @@
     allocate(rseisn(FFT,NS),rseise(FFT,NS),rseisz(FFT,NS),sseisn(FFT,NS),sseise(FFT,NS),sseisz(FFT,NS))
     allocate(stepa(NS),maxampl(NS),staname(NS),stainfo(3,NS))
 
-    open(100,FILE='stations.dat')
-    do k=1,NS
-      read(100,*)dum,dum,dum,staname(k)
-    enddo
-    close(100)
+!    open(100,FILE='stations.dat')
+!    do k=1,NS
+!      read(100,*)dum,dum,dum,staname(k)
+!    enddo
+!    close(100)
     open(100,FILE='stainfo.dat')
     do k=1,NS
-      read(100,*)stainfo(1:3,k)
+      read(100,*)stainfo(1:3,k),dum,dum,dum,dum,staname(k)
     enddo
     close(100)
 
