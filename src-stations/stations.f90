@@ -8,16 +8,20 @@
     REAL*8 x,y,lat,long
     REAL*8 reflat,reflong
 
-!HARD-CODED reference point (corresponds to the reference point in the input.dat file)
-    reflat=42.339
-    reflong=13.381
-    
+    OPEN(110,FILE='stations.in')   !reference point (corresponds to the reference point in the input.dat file)
+    read(110,*)
+    read(110,*)reflat,reflong
+    CLOSE(110)
+
     OPEN(110,FILE='stations.txt')  !INPUT
     OPEN(111,FILE='stations.dat')  !OUTPUT
 
-10  read(110,*,END=12)long,lat
+    OPEN(110,FILE='stations.txt')  !INPUT
+    OPEN(111,FILE='stations.dat')  !OUTPUT
+
+10  read(110,*,END=12)lat,long
     CALL POISTA(lat,long,reflat,reflong,x,y)
-    write(111,*)x,y,0.    Station co-ordinates  x(N>0,km),y(E>0,km),z(km)
+    write(111,*)x,y,0.    !Station co-ordinates  x(N>0,km),y(E>0,km),z(km)
     goto 10
 12  continue
     END

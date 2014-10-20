@@ -124,21 +124,21 @@ enddo
 close(1)
 open(1,file='fault.dat')
 xi=0.
-write(1,*) Transf(xi,.FALSE.)
+write(1,*) Transf(xi,.FALSE.)/1000.
 xi(1)=widt
 xi(2)=0.
 xi(3)=0.
-write(1,*) Transf(xi,.FALSE.)
+write(1,*) Transf(xi,.FALSE.)/1000.
 xi(1)=widt
 xi(2)=leng
 xi(3)=0.
-write(1,*) Transf(xi,.FALSE.)
+write(1,*) Transf(xi,.FALSE.)/1000.
 xi(1)=0.
 xi(2)=leng
 xi(3)=0.
-write(1,*) Transf(xi,.FALSE.)
+write(1,*) Transf(xi,.FALSE.)/1000.
 xi=0.
-write(1,*) Transf(xi,.FALSE.)
+write(1,*) Transf(xi,.FALSE.)/1000.
 
 close(1)    
 

@@ -1,0 +1,28 @@
+No. of computed frequencies
+135
+Length of seismograms (in sec)
+102.4 10.  30. 55.
+Artificial time shift
+30.
+No. of recievers
+9  0
+No. of Greens computed along strike (dip), discretization along strike (dip)
+20 15
+Moment of mainshock
+2.4d18
+Strike  Dip   Rake
+140.    50.   -90.
+Depth of hypocentre FORMALNI - PRO POLOHU ZLOMU, SPRAVNE 8km
+8800.
+Length and width of the fault
+20000.   15000.
+Position of Hypo on the fault
+6000.  4000.
+No. time points
+256
+Vr
+3000
+fc1     fc2
+2
+0.05     0.50
+0.00     0.50
