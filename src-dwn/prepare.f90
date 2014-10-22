@@ -84,14 +84,11 @@ ITM=transpose(TM)
 dx1=widt/float((ng1))
 dx2=leng/float((ng2))
 
-open(3,file='XYGreen.dat')
 do i=1,ng1
   x1a(i)=(float(i)-.5)*dx1
-  write(3,*) x1a(i)
 enddo
 do i=1,ng2
   x2a(i)=(float(i)-.5)*dx2
-  write(3,*) x2a(i)
 enddo
 
 open(1,file='sources.dat')
