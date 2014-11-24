@@ -19,7 +19,7 @@ Suite of codes for linear slip inversions and resolution analysis.
 ####Implemented regularizations of the inversion:
  - Truncated SVD
  - Spatial *k*^-2 prior covariance function
- - Positivity constraint on the slip rates functions
+ - Positivity constraint on the slip rate functions
 
 ####Included codes for evaluation of Green's functions:
  - Axitra (full-wavefield in 1D layered media)
