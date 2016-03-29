@@ -29,13 +29,12 @@ Good luck!
 
 ####References
  - Avallone, A., M. Marzario, A. Cirella, A. Piatanesi, A. Rovelli, C. Di Alessandro,
-   E. D’Anastasio, N. D’Agostino, R. Giuliani, and M. Mattone (2011). Very high rate (10 Hz)
-   GPS seismology for moderate-magnitude earthquakes: The case of the M w 6.3 L’Aquila (central Italy)
+   E. D'Anastasio, N. D'Agostino, R. Giuliani, and M. Mattone (2011). Very high rate (10 Hz)
+   GPS seismology for moderate-magnitude earthquakes: The case of the M w 6.3 L'Aquila (central Italy)
    event, J. Geophys. Res., 116(B2), B02305, doi:10.1029/2010JB007834.
  - Di Stefano, R., C. Chiarabba, L. Chiaraluce, M. Cocco, P. De Gori, D. Piccinini, and L. Valoroso (2011).
    Fault zone properties affecting the rupture evolution of the 2009 (Mw 6.1)
-   L’Aquila earthquake (central Italy): insights from seismic tomography, Geophys. Res. Lett. 38, L10310.
- - Gallovič, F., Imperatori, W., Mai, P. M. (2014). Effect of three-dimensional velocity heterogeneities
-   and topography on slip inversions: case study of the Mw6.3 2009 Lâ€™Aquila earthquake,
-   submitted to J. Geophys. Res.
+   L'Aquila earthquake (central Italy): insights from seismic tomography, Geophys. Res. Lett. 38, L10310.
+ - Gallovi�, F., Imperatori, W., Mai, P. M. (2014). Effect of three-dimensional velocity heterogeneities
+   and topography on slip inversions: case study of the Mw6.3 2009 L'Aquila earthquake, J. Geophys. Res. 120, 428-449.
 
