@@ -6,7 +6,7 @@ Linear multi time-window earthquake slip inversion with *k*^-2 smoothing
 Suite of codes for linear slip inversions and resolution analysis.
 
 ####Capabilities of the codes:
- - Inversion of provided data for a given fault geometry
+ - Inversion of provided data for a given (possibly segmented) fault geometry
  - Resolution analysis by means of synthetic tests with prescribed target rupture model or slip-rate pulse model
  - Inversion in-depth analysis by means of spectral analysis of the forward matrix **G**
  - Can take advantage of Intel MKL library and/or CULA (GPU) for faster performance

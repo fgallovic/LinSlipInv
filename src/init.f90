@@ -6,35 +6,38 @@
       REAL*8,PARAMETER:: PI=3.1415926535d0
       INTEGER Msvd,Nsvd    !Msvd - number of model parameters, Nsvd - number of data
       INTEGER Nsmooth,Ssvd,NSTAcomp,Nseis,Ngps,Nslip
-      INTEGER NL,NW,nfmax,NRseis,NRgps,np
-      REAL*8 T,TS,T1,T2,T0,artifDT,Mfix,strike,dip,hypodepth,leng,widt,epicW,epicL,vr
+      INTEGER nfmax,NRseis,NRgps,np,NSeg
+      REAL*8 T,TS,T1,T2,T0,artifDT,Mfix,vr
       INTEGER iT1,iT2,nT,iT0
       REAL*8,ALLOCATABLE,DIMENSION(:):: fc1,fc2
       INTEGER,ALLOCATABLE,DIMENSION(:):: fcsta
       INTEGER nfc
-      REAL*8 dt,df,dL,dW,elem
+      REAL*8 dt,df
       REAL*8 smoothkoef,smoothkoefGF,relatweightGPS,lambdalim,maxw
       REAL*8 norminput,normdatGPS
       CHARACTER*256 inputtffile
       INTEGER syntdata,syntdatai,syntdataj,compweights,fixM0weight,slipweight
       INTEGER eigsumchoice,lambdafrom,lambdato,lambdanum
       INTEGER minMNsvd,minSVDchoice
-      REAL*8,ALLOCATABLE:: staweight(:,:)
-      INTEGER,ALLOCATABLE:: stainfo(:,:)
-      REAL*8,ALLOCATABLE:: G(:,:),mu(:,:),lambda(:,:)
+      REAL*8,ALLOCATABLE:: staweight(:,:),R(:)
+      INTEGER,ALLOCATABLE:: stainfo(:,:),NL(:),NW(:)
+      REAL*8,ALLOCATABLE,DIMENSION(:):: hypodepth,leng,widt,epicW,epicL,dL,dW,elem,strike,dip
+      REAL*8,ALLOCATABLE:: G(:,:)
+      REAL*8,ALLOCATABLE,DIMENSION(:,:,:):: mu,lambda
       REAL*8,ALLOCATABLE:: D(:),normdat(:)
       REAL*8,ALLOCATABLE:: V(:,:),VT(:,:),U(:,:),W(:)
       REAL*8,ALLOCATABLE:: Dout(:,:),M(:,:)
-      REAL*4,ALLOCATABLE,DIMENSION(:,:):: sigmaGPS,sourNgps,sourEgps,sourZgps,strikeGPS,dipGPS,rakeGPS
+      REAL*4,ALLOCATABLE,DIMENSION(:,:,:):: sourNgps,sourEgps,sourZgps,strikeGPS,dipGPS,rakeGPS
+      REAL*4,ALLOCATABLE:: sigmaGPS(:,:)
     END MODULE
 
     SUBROUTINE Init()
     USE SISVDmodule
     IMPLICIT NONE
     INTEGER ndepth
-    REAL*8 dum,R,staN,staE
+    REAL*8 dum,staN,staE
     REAL*8,ALLOCATABLE:: depth(:),vp(:),vs(:),rho(:)
-    INTEGER i,j
+    INTEGER i,j,k
 
     write(*,*)'Reading parameters...'
 
@@ -44,22 +47,23 @@
     read(10,*)
     read(10,*) T,TS,T1,T2
     read(10,*)
-    read(10,*) artifDT
+    read(10,*) artifDT,NSeg
+    allocate(NL(NSeg),NW(NSeg),hypodepth(NSeg),leng(NSeg),widt(NSeg),epicW(NSeg),epicL(NSeg),strike(NSeg),dip(NSeg))
     read(10,*)
     read(10,*) NRseis,NRgps
     read(10,*)
-    read(10,*) NL,NW
+    read(10,*) (NL(i),NW(i),i=1,NSeg)
     read(10,*)
     read(10,*) Mfix
     read(10,*)
-    read(10,*) strike,dip
+    read(10,*) (strike(i),dip(i),i=1,NSeg)
     read(10,*)
-    read(10,*) hypodepth
+    read(10,*) (hypodepth(i),i=1,NSeg)
     read(10,*)
-    read(10,*) leng,widt
+    read(10,*) (leng(i),widt(i),i=1,NSeg)
     read(10,*)
-    write(*,*) '  (Warning! Assumig epicL, epicW in input.dat!)'
-    read(10,*) epicL,epicW
+    write(*,*) '  (Warning! Assumig order epicL, epicW in input.dat!)'
+    read(10,*) (epicL(i),epicW(i),i=1,NSeg)
     read(10,*)
     read(10,*) np
     read(10,*)
@@ -71,10 +75,11 @@
       read(10,*) fc1(i),fc2(i)
     enddo
     close(10)
-    dL=leng/dble(NL)
-    dW=widt/dble(NW)
-    elem=dL*dW
-
+    allocate(dL(NSeg),dW(NSeg),elem(NSeg))
+    dL(:)=leng(:)/dble(NL(:))
+    dW(:)=widt(:)/dble(NW(:))
+    elem(:)=dL(:)*dW(:)
+   
     if(NRseis>0)then
       dt=T/float(np)
       df=1./T
@@ -112,12 +117,12 @@
     read(10,*)
     read(10,*)T0
     iT0=T0/dt
-	  read(10,*)
-	  read(10,*)minSVDchoice
+	read(10,*)
+	read(10,*)minSVDchoice
     close(10)
 
 ! Evaluating mu
-    allocate(mu(NL,NW),lambda(NL,NW))
+    allocate(mu(maxval(NL),maxval(NW),NSeg),lambda(maxval(NL),maxval(NW),NSeg))
     open(10,FILE='crustal.dat',ACTION='READ',STATUS='OLD',ERR=181)
     write(*,*)'  (Using mu values from file crustal.dat)'
     read(10,*)
@@ -130,41 +135,51 @@
       read(10,*)depth(i),vp(i),vs(i),rho(i)
     enddo
     close(10)
-    do i=1,NW
-      dum=(hypodepth+(epicW-dW*(dble(i)-.5d0))*sin(dip/180.d0*PI))/1000.d0
-      if(dum>depth(ndepth))then
-        mu(:,i)=rho(ndepth)*vs(ndepth)**2*1.d9
-        lambda(:,i)=rho(ndepth)*vp(ndepth)**2*1.d9-2*mu(:,i)
-      else
-        do j=1,ndepth
-          if(dum<depth(j))exit
-        enddo
-        mu(:,i)=rho(j-1)*vs(j-1)**2*1.d9
-        lambda(:,i)=rho(j-1)*vp(j-1)**2*1.d9-2*mu(:,i)
-      endif
+    do k=1,NSeg
+      do i=1,NW(k)
+        dum=(hypodepth(k)+(epicW(k)-dW(k)*(dble(i)-.5d0))*sin(dip(k)/180.d0*PI))/1000.d0
+        if(dum>depth(ndepth))then
+          mu(1:NL(k),i,k)=rho(ndepth)*vs(ndepth)**2*1.d9
+          lambda(1:NL(k),i,k)=rho(ndepth)*vp(ndepth)**2*1.d9-2*mu(1:NL(k),i,k)
+        else
+          do j=1,ndepth
+            if(dum<depth(j))exit
+          enddo
+          mu(1:NL(k),i,k)=rho(j-1)*vs(j-1)**2*1.d9
+          lambda(1:NL(k),i,k)=rho(j-1)*vp(j-1)**2*1.d9-2*mu(1:NL(k),i,k)
+        endif
+      enddo
     enddo
     deallocate(depth,vp,vs,rho)
     goto 183
 
 181 open(10,FILE='NEZsor.mu',ACTION='READ',STATUS='OLD',ERR=182)
     write(*,*)'  (Using mu values from file NEZsor.mu)'
-    do j=1,NW
-      read(10,*)(mu(i,j),i=1,NL)
+    do k=1,NSeg
+      do j=1,NW(k)
+        read(10,*)(mu(i,j,k),i=1,NL(k))
+      enddo
     enddo
-    lambda=0.
+    lambda(:,:,:)=0.
     goto 183
 
 182 write(*,*)'ERROR - neither crustal.dat nor NEZsor.mu found!'
     stop
 
-183 norminput=Mfix*dble(NL*NW)/sum(mu(:,:))/elem/dt
-
-! Location of subsources (needed for GPS and SCRMOD output format)
+183 norminput=0.d0
+    do k=1,NSeg
+      norminput=norminput+Mfix*dble(NL(k)*NW(k))/sum(mu(1:NL(k),1:NW(k),k))/elem(k)/dt
+    enddo
+    
+! Location of subsources (needed for GPS, distance-dependent weights, CD matrix calculation and SCRMOD output format)
     open(10,FILE='sources.dat')
-    allocate(sourNgps(NL,NW),sourEgps(NL,NW),sourZgps(NL,NW),strikeGPS(NL,NW),dipGPS(NL,NW),rakeGPS(NL,NW))
-    do j=1,NW
-      do i=1,NL
-        read(10,*)dum,sourNgps(i,j),sourEgps(i,j),sourZgps(i,j),strikeGPS(i,j),dipGPS(i,j),rakeGPS(i,j)
+    allocate(sourNgps(maxval(NL),maxval(NW),NSeg),sourEgps(maxval(NL),maxval(NW),NSeg),sourZgps(maxval(NL),maxval(NW),NSeg))
+    allocate(strikeGPS(maxval(NL),maxval(NW),NSeg),dipGPS(maxval(NL),maxval(NW),NSeg),rakeGPS(maxval(NL),maxval(NW),NSeg))
+    do k=1,NSeg
+      do j=1,NW(k)
+        do i=1,NL(k)
+          read(10,*)dum,sourNgps(i,j,k),sourEgps(i,j,k),sourZgps(i,j,k),strikeGPS(i,j,k),dipGPS(i,j,k),rakeGPS(i,j,k)
+        enddo
       enddo
     enddo
     close(10)
@@ -172,22 +187,27 @@
     sourEgps=sourEgps*1.e3
     sourZgps=sourZgps*1.e3
 
-!Applying distance dependent weigths
-    if(compweights==2)then
-       write(*,*)'  (Applying distance-dependent weigths)'
-       open(10,FILE='stations.dat')
-       open(11,FILE='stainfo.out')
-       do i=1,NRseis
-         read(10,*)staN,staE
-         R=minval(sqrt((sourNgps(:,:)-staN*1.e3)**2+(sourEgps(:,:)-staE*1.e3)**2))
-!         dum=max(R,10.e3)/10.e3
-         dum=max(R,leng/4.)/(leng/4.)
-         staweight(:,i)=staweight(:,i)*dum
-         write(11,*)staN,staE,dum
-       enddo
-       close(10)
-       close(11)
+    if(compweights>1)then
+      allocate(R(NRseis))
+      open(10,FILE='stations.dat')
+      do i=1,NRseis
+        read(10,*)staN,staE
+        R(i)=minval(sqrt((sourNgps(1:NL(1),1:NW(1),1)-staN*1.e3)**2+(sourEgps(1:NL(1),1:NW(1),1)-staE*1.e3)**2))
+      enddo
+      close(10)
     endif
+
+!Applying distance dependent weigths (ABSOLETE, SUBSTITUTED BY CD in CreateGandD.f90)
+!    if(compweights==2)then
+!      write(*,*)'  (Applying distance-dependent weigths from segment 1)'
+!      open(11,FILE='stainfo.out')
+!      do i=1,NRseis
+!        dum=max(R(i),leng(1)/4.)/(leng(1)/4.)
+!        staweight(:,i)=staweight(:,i)*dum
+!        write(11,*)staN,staE,dum
+!      enddo
+!      close(11)
+!    endif
 
 ! Main allocations
 
@@ -201,12 +221,12 @@
       dt=1.d0
       df=1.d0
       np=0
-      Ssvd=1                      !Slip value
+      Ssvd=1                      !Just slip value
     endif
 
-    Msvd=NW*NL*Ssvd               !number of model parameters
+    Msvd=sum(NW(:)*NL(:))*Ssvd               !number of model parameters
     if(smoothkoef<0.d0)then       !smoothing by means of first differences
-      Nsmooth=(Ssvd-1)*NL*NW+Ssvd*(NL-1)*NW+Ssvd*NL*(NW-1)
+      Nsmooth=sum(NL(:)*NW(:))*(Ssvd-1)+Ssvd*sum((NL(:)-1)*NW(:))+Ssvd*sum(NL(:)*(NW(:)-1))
     elseif(smoothkoef>0.d0)then   !smoothing by means of a covariance function 
       Nsmooth=Msvd
     else                          !no smoothing

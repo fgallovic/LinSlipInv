@@ -6,7 +6,7 @@
     IMPLICIT NONE
     REAL*8,ALLOCATABLE:: UTW(:,:),UTdW(:),LA(:,:),eigvec(:,:,:)
     REAL*8,ALLOCATABLE:: CM(:,:),RM(:,:),RMdum(:,:),Gdum1(:,:),Gdum2(:,:)
-    INTEGER dumi,i,j,k
+    INTEGER dumi,i,j,k,kk,SegShift
     REAL*8 dum,resparam
 
     CALL RANDOM_SEED()
@@ -38,18 +38,21 @@
       write(*,*)'  (check ok)'
     endif
 
-    allocate(eigvec(Ssvd,NL,NW))
     write(*,*)'Writing 10 leading eigenvectors ...'
     open(151,FILE='eigenvectors1d.dat')
     do k=1,10
-      eigvec=RESHAPE(v(:,k),(/Ssvd, NL, NW/))
-      do i=1,Ssvd
-        write(151,'(1000E13.5)')(sum(eigvec(i,j,:)),j=1,NL)
+      do kk=1,NSeg
+        allocate(eigvec(Ssvd,NL(kk),NW(kk)))
+        SegShift=sum(NW(1:kk-1)*NL(1:kk-1))*Ssvd
+        eigvec(:,:,:)=RESHAPE(v(SegShift+1:SegShift+NW(kk)*NL(kk)*Ssvd,k),(/Ssvd, NL(kk), NW(kk)/))
+        do i=1,Ssvd
+          write(151,'(1000E13.5)')(sum(eigvec(i,j,1:NW(kk))),j=1,NL(kk))
+        enddo
+        write(151,*)
+        write(151,*)
+        deallocate(eigvec)
       enddo
-      write(151,*)
-      write(151,*)
     enddo
-    deallocate(eigvec)
     close(151)
     open(151,FILE='eigenvectors.dat')
     do i=1,Msvd
@@ -136,7 +139,7 @@
     M=matmul(V,LA)
 #endif
 
-!aposterior covariance matrix CM   See (3.60) in Tarantola
+!posterior covariance matrix CM   See (3.60) in Tarantola
     if(abs(smoothkoef)>0.d0)then
       write(*,*)'  (evaluating posterior covariance matrix CM...)'
       allocate(CM(Msvd,Msvd),RMdum(Msvd,Msvd),RM(Msvd,Msvd))
@@ -151,20 +154,26 @@
       CM=matmul(V,VT)
       deallocate(VT)
 #endif
-      open(111,FILE='CM.dat')
+      open(111,FILE='CM-stddev.dat')
       do i=1,Msvd
         write(111,*)sqrt(CM(i,i))
       enddo
       close(111)
+      open(111,form='unformatted',FILE='CM.dat')
+      write(111)CM
+      close(111)
       open(111,FILE='mtildeslip2D-stddev.dat')
 !      write(*,*)sqrt(sum(CM))*dt/dble(Msvd)   !standard deviation of the slip
-      do j=1,NW
-        dumi=(j-1)*NL*Ssvd
-        write(111,'(1000E13.5)')(sqrt(sum(CM(dumi+(i-1)*Ssvd+1:dumi+i*Ssvd,dumi+(i-1)*Ssvd+1:dumi+i*Ssvd)))*dt,i=1,NL),sqrt(sum(CM(dumi+(NL-1)*Ssvd+1:dumi+NL*Ssvd,dumi+(NL-1)*Ssvd+1:dumi+NL*Ssvd)))*dt  !støední odchylka skluzu
+      do kk=1,NSeg
+        SegShift=sum(NW(1:kk-1)*NL(1:kk-1))*Ssvd
+        do j=1,NW(kk)
+          dumi=SegShift+(j-1)*NL(kk)*Ssvd
+          write(111,'(1000E13.5)')(sqrt(sum(CM(dumi+(i-1)*Ssvd+1:dumi+i*Ssvd,dumi+(i-1)*Ssvd+1:dumi+i*Ssvd)))*dt,i=1,NL(kk)),sqrt(sum(CM(dumi+(NL(kk)-1)*Ssvd+1:dumi+NL(kk)*Ssvd,dumi+(NL(kk)-1)*Ssvd+1:dumi+NL(kk)*Ssvd)))*dt  !støední odchylka skluzu
+        enddo
+        dumi=SegShift+(NW(kk)-1)*NL(kk)*Ssvd
+        write(111,'(1000E13.5)')(sqrt(sum(CM(dumi+(i-1)*Ssvd+1:dumi+i*Ssvd,dumi+(i-1)*Ssvd+1:dumi+i*Ssvd)))*dt,i=1,NL(kk)),sqrt(sum(CM(dumi+(NL(kk)-1)*Ssvd+1:dumi+NL(kk)*Ssvd,dumi+(NL(kk)-1)*Ssvd+1:dumi+NL(kk)*Ssvd)))*dt  !støední odchylka skluzu
+        close(111)
       enddo
-      dumi=(NW-1)*NL*Ssvd
-      write(111,'(1000E13.5)')(sqrt(sum(CM(dumi+(i-1)*Ssvd+1:dumi+i*Ssvd,dumi+(i-1)*Ssvd+1:dumi+i*Ssvd)))*dt,i=1,NL),sqrt(sum(CM(dumi+(NL-1)*Ssvd+1:dumi+NL*Ssvd,dumi+(NL-1)*Ssvd+1:dumi+NL*Ssvd)))*dt  !støední odchylka skluzu
-      close(111)
     endif
 
     deallocate(V,LA)

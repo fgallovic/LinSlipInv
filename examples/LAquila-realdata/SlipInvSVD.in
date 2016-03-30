@@ -1,12 +1,12 @@
-Data (1 = synthetic data, 0 = read from files)
+Data (1 = synthetic data, 0 = read from files, -1 = custom target model from a file)
 0
-Std.dev for slip velocity (0. = no smoothing), Std.dev for GF's, Weight of GPS, Weight of M0 constraint, Weight of additional constraint
+Std.dev for slip rate (0 = no smoothing), Std.dev for GF's, GPS weight, M0 constraint weight, Weight of additional constraint
 1.d0  0.1  .1d0   1.d0   0.d0
-Station component weights (0 = weights based on distance, 1 = no distance dependence of weights)
+Station component weights (1=no distance distance-dependent weights, 2=distance-dependent approximated CD)
 1
 Choice of use of eigenvectors (see further)
 1
-1: defined minimum singular value, 2: defined min and max number of eigenvectors to be taken into account
+1: single minimum singular value, 2: defined min and max number of eigenvectors to be considered
 10.
 Additional temporal shift (in sec)
 1.

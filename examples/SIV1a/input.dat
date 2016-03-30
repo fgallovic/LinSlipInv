@@ -2,25 +2,25 @@ No. of computed frequencies (should be larger than half of the temporal discreti
 130
 Length of seismograms, slip rate time window, start and end time for waveform comparison (sec)
 102.4 10. 30. 70.
-Artificial time shift (sec)
-30.
-Number of recievers (waveforms, GPS)
+Artificial time shift (sec), number of segments
+30.  1
+Number of recievers (waveforms, static GPS)
 56  0
-Spatial discretization along strike and dip
+Spatial discretization along strike and dip for each segment
 35 20
 Scalar seismic moment (Nm)
-1.06d19
-Strike  Dip   Rake
+1.06e19
+Strike  Dip   Rake  (degrees) for each segment
 90.    80.   180.
-Depth of fault reference point (m)
+Depth of fault reference point (m) for each segment
 10.
-Length and width of the fault (m)
+Length and width of the fault (m) for each segment
 35000.   20000.
-Position of reference point on the fault (m)
+Position of reference point on the fault (m) for each segment
 17500.   20000.
-Temporal discretization
+Number of samples in the time domain
 256
-Rupture velocity (m/s)
+Rupture velocity (m/s) - used only if generating synthetic forward model
 3000
 Number of filter ranges, followed by corner frequencies
 1

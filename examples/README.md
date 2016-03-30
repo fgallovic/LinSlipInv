@@ -2,17 +2,17 @@
 ----------------------------------------------
 
 ####List of available examples:
- - `SIV1a`: Benchmark from the Source Inversion Validation (SIV, see the enclosed pdf file, or directly http://equake-rc.info/sivdb/).
- - `LAquila-realdata`: Inversion of real data recorded during the Mw6.3 2009 L'Aquila earthquake. You are welcome to try all the features for analysis of the slip resolution by means of synthetic tests.
+ - `SIV1a`: Benchmark from the Source Inversion Validation (SIV, Mai et al., 2016, see the enclosed pdf file, or directly http://equake-rc.info/sivdb/). Note that the inversion using `SlipInvNNLS` takes several hours on 6-core CPU. 
+ - `LAquila-realdata`: Inversion of real data recorded during the Mw6.3 2009 L'Aquila earthquake. You are welcome to try all the features for analysis of the slip resolution by means of synthetic tests. `SlipInvNNLS` takes approx. half an hour on 6-core CPU to perform the inversion.
 
 ####How to run the examples:
  1. Create a working directory a copy there all the files from the present directory.
  2. First step is the calculation of the Green's functions: Copy all files from the source directory src-dwn to the working directory and run first script  `firststep.sh` and then `calculate.sh`. You should eventually have all the Green's in file `NEZsor.dat`. In case of the real data, you can use the precomputed
-    3D GFs considering 3D tomographic velocity model of Di Stefano et al. (2011) with real topography located in subdirectory `3D_GFs_topo_3D_GPS'.
+    3D GFs considering 3D tomographic velocity model of Di Stefano et al. (2011) with real topography located in subdirectory `3D_GFs_topo_3D_GPS`.
  3. In case of the real data application, run conversion of real data files in subdirectory `data` in the example directory using script `processseis.sh`. Copy the resulting seismogram files `rvseis[nez].dat` or create their symbolic links into the working directory.
- 3. Now you can start with the data inversion: Compile the source files in the directory `src` and create symbolic links to the executables in the working directory. Run the inversion (e.g., `SlipInvNNLS`).
- 4. To plot the results, copy everything from the directory `src-graphics` to the working directory. Then you can run the specific plotting scripts and compare the plots with those in subdirectory `results.NNLS` in the example directory.
- 5. You can start with experiments regarding different inversion approaches and synthetic/resolution tests. The latter can be attained by modyfing input file
+ 4. Now you can start with the data inversion: Compile the source files in the directory `src` and create symbolic links to the executables in the working directory. Run the inversion (e.g., `SlipInvNNLS`).
+ 5. To plot the results, copy everything from the directory `src-graphics` to the working directory. Then you can run the specific plotting scripts and compare the plots with those in subdirectory `results.NNLS` in the example directory.
+ 6. You can start with experiments regarding different inversion approaches and synthetic/resolution tests. The latter can be attained by modyfing input file
     `SlipInvSVD.in`.
 
 Good luck!
@@ -25,7 +25,7 @@ Good luck!
  - The displacement waveforms obtained from HR-GPS stations were kindly provided by A. Avallone
    (Avallone et al., 2011).
  - 3D GFs were calculated for the 3D tomographic velocity model of Di Stefano et al. (2011) with
-   real topography (Galloviƒç et al., 2014).
+   real topography (GalloviË et al., 2014).
 
 ####References
  - Avallone, A., M. Marzario, A. Cirella, A. Piatanesi, A. Rovelli, C. Di Alessandro,
@@ -37,4 +37,5 @@ Good luck!
    L'Aquila earthquake (central Italy): insights from seismic tomography, Geophys. Res. Lett. 38, L10310.
  - GalloviË, F., Imperatori, W., Mai, P. M. (2014). Effect of three-dimensional velocity heterogeneities
    and topography on slip inversions: case study of the Mw6.3 2009 L'Aquila earthquake, J. Geophys. Res. 120, 428-449.
-
+ - Mai, P. M., Schorlemmer, D., Page, M., Ampuero, J.-P., Asano, K., Causse, M., Custodio, S., Fan, W., Festa, G., Galis, M., Gallovic, F., Imperatori, W., K‰ser, M., Malytskyy, D., Okuwaki, R., Pollitz, F., Passone, L., Razafindrakoto, H., Sekiguchi, H., Song, S.-G., Somala, S., Thingbaijam, K., Twardzik, C., van Driel, M., Vyas, J., Wang, R., Yagi, Y., Zielke, O. (2016). The Earthquake-Source Inversion Validation (SIV) Project, Seism. Res. Lett., in press.
+ - See also http://geo.mff.cuni.cz/~gallovic/.

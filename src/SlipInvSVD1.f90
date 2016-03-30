@@ -12,7 +12,7 @@
     IMPLICIT NONE
     REAL*8,ALLOCATABLE:: GTd(:),work(:),GTdvec(:,:,:),eigvec(:,:,:)
     INTEGER lwork,info
-    INTEGER i,j,k
+    INTEGER i,j,k,kk,SegShift
 #ifdef CULA
     REAL*4,ALLOCATABLE:: culaG(:,:),culaW(:),culaVT(:,:)
 #endif
@@ -37,25 +37,32 @@
     close(111)
 
     write(*,*)'Calculating vector GTd ...'
-    allocate(GTd(Msvd),GTdvec(Ssvd,NL,NW))
+    allocate(GTd(Msvd))
+    open(198,FILE='GTd1d.dat')
+    open(199,FILE='GTd.dat')
 #ifdef MKL
     call dgemv('T',Nsvd,Msvd,1.d0,G ,Nsvd,D,1,0.d0,GTd,1)
 #else
     GTd=matmul(D,G)
 #endif
-    GTdvec=RESHAPE(GTd,(/Ssvd, NL, NW/))
     write(*,*)'  (saving)'
-    open(198,FILE='GTd.dat')
-    write(198,'(1E13.5)')GTd
-    close(198)
-    open(198,FILE='GTd1d.dat')
-    do i=1,Ssvd
-      write(198,'(1000E13.5)')(sum(GTdvec(i,j,:)),j=1,NL)
+    do kk=1,NSeg
+      allocate(GTdvec(Ssvd,NL(kk),NW(kk)))
+      SegShift=sum(NW(1:kk-1)*NL(1:kk-1))*Ssvd
+      GTdvec=RESHAPE(GTd(SegShift+1:SegShift+NW(kk)*NL(kk)*Ssvd),(/Ssvd, NL(kk), NW(kk)/))
+      write(199,'(1E13.5)')GTdvec
+      write(199,*);write(199,*)
+      do i=1,Ssvd
+        write(198,'(1000E13.5)')(sum(GTdvec(i,j,1:NW(kk))),j=1,NL(kk))
+      enddo
+      write(198,*);write(198,*)
+      deallocate(GTdvec)
     enddo
     close(198)
-    deallocate(GTd,GTdvec)
+    close(199)
+    deallocate(GTd)
 
-    write(*,*)'Decompozition of matrix',Nsvd,'x',Msvd,'...'
+    write(*,*)'Decomposition of matrix',Nsvd,'x',Msvd,'...'
 #ifndef MKL
     write(*,*)'  (using Numerical Recepies)'
     CALL svdcmp(G,Nsvd,Msvd,Nsvd,Msvd,W,V) ! Warning: G became U
