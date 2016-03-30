@@ -2,7 +2,7 @@
 ----------------------------------------------
 
 ####List of available examples:
- - `SIV1a`: Benchmark from the Source Inversion Validation (SIV, Mai et al., 2016, see the enclosed pdf file, or directly http://equake-rc.info/sivdb/). Note that the inversion using `SlipInvNNLS` takes several hours on 6-core CPU. 
+ - `SIV1a`: Benchmark from the Source Inversion Validation (SIV, Mai et al., 2016, see the enclosed pdf file, or directly http://equake-rc.info/sivdb/). Note that the inversion using `SlipInvNNLS` takes approx. 2 hours on 6-core CPU. 
  - `LAquila-realdata`: Inversion of real data recorded during the Mw6.3 2009 L'Aquila earthquake. You are welcome to try all the features for analysis of the slip resolution by means of synthetic tests. `SlipInvNNLS` takes approx. half an hour on 6-core CPU to perform the inversion.
 
 ####How to run the examples:

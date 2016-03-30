@@ -1,7 +1,7 @@
 #LinSlipInv
 -----------
 
-Linear multi time-window earthquake slip inversion with *k*^-2 smoothing
+Linear multi time-window earthquake slip inversion with *k*<sup>-2</sup> smoothing
 
 Suite of codes for linear slip inversions and resolution analysis.
 
@@ -18,7 +18,7 @@ Suite of codes for linear slip inversions and resolution analysis.
 
 ####Implemented regularizations of the inversion:
  - Truncated SVD
- - Spatial *k*^-2 prior covariance function
+ - Spatial *k*<sup>-2</sup> prior covariance function
  - Positivity constraint on the slip rate functions
 
 ####Included codes for evaluation of Green's functions:
