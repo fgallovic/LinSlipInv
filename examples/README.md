@@ -37,5 +37,5 @@ Good luck!
    L'Aquila earthquake (central Italy): insights from seismic tomography, Geophys. Res. Lett. 38, L10310.
  - Galloviè, F., Imperatori, W., Mai, P. M. (2014). Effect of three-dimensional velocity heterogeneities
    and topography on slip inversions: case study of the Mw6.3 2009 L'Aquila earthquake, J. Geophys. Res. 120, 428-449.
- - Mai, P. M., Schorlemmer, D., Page, M., Ampuero, J.-P., Asano, K., Causse, M., Custodio, S., Fan, W., Festa, G., Galis, M., Gallovic, F., Imperatori, W., Käser, M., Malytskyy, D., Okuwaki, R., Pollitz, F., Passone, L., Razafindrakoto, H., Sekiguchi, H., Song, S.-G., Somala, S., Thingbaijam, K., Twardzik, C., van Driel, M., Vyas, J., Wang, R., Yagi, Y., Zielke, O. (2016). The Earthquake-Source Inversion Validation (SIV) Project, Seism. Res. Lett., in press.
+ - Mai, P. M., Schorlemmer, D., Page, M., Ampuero, J.-P., Asano, K., Causse, M., Custodio, S., Fan, W., Festa, G., Galis, M., Gallovic, F., Imperatori, W., Käser, M., Malytskyy, D., Okuwaki, R., Pollitz, F., Passone, L., Razafindrakoto, H., Sekiguchi, H., Song, S.-G., Somala, S., Thingbaijam, K., Twardzik, C., van Driel, M., Vyas, J., Wang, R., Yagi, Y., Zielke, O. (2016). The Earthquake-Source Inversion Validation (SIV) Project, Seism. Res. Lett. 87, 712-718.
  - See also http://geo.mff.cuni.cz/~gallovic/.

@@ -34,7 +34,7 @@
       if(compweights==2)then
         write(*,*)'  (Applying distance-dependent CD - still in testing mode!)'
         allocate(CD(Nseis,Nseis))
-        CALL fillCDmatrix(Uvec,CD)   !Following Hallo and Gallovic (2016)
+        CALL fillCDmatrix(Uvec,CD)   !Following SAXCF of Hallo and Gallovic (2016)
 #ifdef MKL
         allocate(Hnew(Nseis,Msvd))
         call dgemm('N','N',Nseis,Msvd,Nseis,1.d0,CD,Nseis,H,Nseis,0.d0,Hnew,Nseis)
@@ -508,7 +508,7 @@
     REAL*8 Uvec(Nseis),CD(Nseis,Nseis)
     REAL*8 dvec(nT),CDsub(nT,nT),maxdiagCD
     REAL*8 staN,staE
-    INTEGER i,j,jj,k,m,L1
+    INTEGER i,j,jj,k,L1
     CD=0.
     j=0
 !    L1=5.   !Nahodne casove posuny
@@ -609,6 +609,14 @@
       XC(:,i)=XC(:,i)-s1smooth1(:)*cshift(s2smooth1(:),SHIFT=(FFT/2+1)-i)
     enddo
 
+!Stationarize axcf (comment to go back to axcf):
+    do i=1,FFT
+      XC(:,i)=sum(XC(1:N,i))/dble(N)
+    enddo
+    do i=1,FFT
+      XC(i,FFT/2+1)=XC(i,FFT/2+1)*1.1
+    enddo
+    
     do i=1,N
      do j=1,N
        C(i,j)=dble(XC(i,FFT/2+1-(j-i)))

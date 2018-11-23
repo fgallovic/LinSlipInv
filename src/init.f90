@@ -56,7 +56,7 @@
     read(10,*)
     read(10,*) Mfix
     read(10,*)
-    read(10,*) (strike(i),dip(i),i=1,NSeg)
+    read(10,*) (strike(i),dip(i),dum,i=1,NSeg)
     read(10,*)
     read(10,*) (hypodepth(i),i=1,NSeg)
     read(10,*)

@@ -16,9 +16,6 @@
     OPEN(110,FILE='stations.txt')  !INPUT
     OPEN(111,FILE='stations.dat')  !OUTPUT
 
-    OPEN(110,FILE='stations.txt')  !INPUT
-    OPEN(111,FILE='stations.dat')  !OUTPUT
-
 10  read(110,*,END=12)lat,long
     CALL POISTA(lat,long,reflat,reflong,x,y)
     write(111,*)x,y,0.    !Station co-ordinates  x(N>0,km),y(E>0,km),z(km)

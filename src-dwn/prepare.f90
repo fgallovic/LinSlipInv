@@ -2,7 +2,6 @@ program PREPARE
 
 implicit none
 
-integer, parameter :: ngmax=10000
 real, parameter :: pi=3.141592654
 real df,aw1,t0
 complex rseis,ui,freq
@@ -72,7 +71,6 @@ open(1,file='sources.dat')
 open(2,file='fault.dat')
 k=0
 do kk=1,NSeg
-  if(ng2(kk)>ngmax.or.ng1(kk)>ngmax)stop 'Check dimensions!'
 
   hypo(3,kk)=0.
 
