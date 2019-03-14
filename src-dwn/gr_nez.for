@@ -101,6 +101,7 @@ c++++++++++
       freq=-dfreq
       pil=pi2/xl
       iklast=0
+      lastik=0
 
       call initdata
 
