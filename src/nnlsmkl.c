@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <float.h>
 #include "omp.h"
 #include "mkl.h"
 //#include "mex.h"
@@ -191,7 +192,8 @@ void nnlsOMPSysMKL(REAL *A, REAL *b, REAL *x, int isTransposed, int maxNNLSIters
 	  DGELS(&transaN, &m, &kCols, &one, &Apt[M3(tid, 0, 0, n, m)], &m, &xp[M2(tid, 0, maxmn)], &m, &work[M2(tid, 0, lwork)], &lwork, &info);
 #endif
 	  //Load solution xp int tx
-	  REAL minTx = HUGE;
+//	  REAL minTx = HUGE;
+	  REAL minTx = FLT_MAX;
 	  memset(&tx[M2(tid, 0, n)], 0, sizeof(REAL) * n);
 	  for(i = kCols - 1; i >= 0; --i){
 	    int kdx = kIdx[M2(tid, i, n)];
@@ -208,7 +210,8 @@ void nnlsOMPSysMKL(REAL *A, REAL *b, REAL *x, int isTransposed, int maxNNLSIters
 	    //Reject solution, update subproblem
 	    //Find index q in set P for negative z such that x/(x-z) is minimized
 	    //printf("Reject\n");
-	    REAL minAlpha = HUGE;
+//	    REAL minAlpha = HUGE;
+ 	    REAL minAlpha = FLT_MAX;
 	    for(i = 0; i < kCols; ++i){
 	      int kdx = kIdx[M2(tid, i, n)];
 	      if(tx[M2(tid, kdx, n)] <= 0)
@@ -488,7 +491,8 @@ void nnlsOMPSysMKLUpdates(REAL *A, REAL *b, REAL *x, int isTransposed,  int maxN
 	  }
 	  
 	  //Compute solution tx	
-	  REAL minTx = HUGE;
+//	  REAL minTx = HUGE;
+	  REAL minTx = FLT_MAX;
 	  memset(&tx[M2(tid, 0, n)], 0, sizeof(REAL) * n);
 	  for(i = kCols - 1; i >= 0; --i){
 	    int kdx = kIdx[M2(tid, i, n)];
@@ -512,7 +516,8 @@ void nnlsOMPSysMKLUpdates(REAL *A, REAL *b, REAL *x, int isTransposed,  int maxN
 	    //Reject solution, update subproblem
 	    //Find index q in set P for negative z such that x/(x-z) is minimized
 	    //printf("Reject\n");
-	    REAL minAlpha = HUGE;
+//	    REAL minAlpha = HUGE;
+	    REAL minAlpha = FLT_MAX;
 	    for(i = 0; i < kCols; ++i){
 	      int kdx = kIdx[M2(tid, i, n)];
 	      if(tx[M2(tid, kdx, n)] <= 0)
