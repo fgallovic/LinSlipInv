@@ -121,6 +121,19 @@
 	read(10,*)minSVDchoice
     close(10)
 
+    if(NRseis>0)then
+      Ssvd=int(TS/dt+1.d0)       !number of time samples of the slip velocity model
+      if(iT1-iT0-Ssvd<0.or.iT2-iT0>np)then
+        write(*,*)'Error! Time window out of range, check input.dat...'
+        stop
+      endif
+    else
+      dt=1.d0
+      df=1.d0
+      np=0
+      Ssvd=1                      !Just slip value
+    endif
+
 ! Evaluating mu
     allocate(mu(maxval(NL),maxval(NW),NSeg),lambda(maxval(NL),maxval(NW),NSeg))
     open(10,FILE='crustal.dat',ACTION='READ',STATUS='OLD',ERR=181)
@@ -210,19 +223,6 @@
 !    endif
 
 ! Main allocations
-
-    if(NRseis>0)then
-      Ssvd=int(TS/dt+1.d0)       !number of time samples of the slip velocity model
-      if(iT1-iT0-Ssvd<0.or.iT2-iT0>np)then
-        write(*,*)'Error! Time window out of range, check input.dat...'
-        stop
-      endif
-    else
-      dt=1.d0
-      df=1.d0
-      np=0
-      Ssvd=1                      !Just slip value
-    endif
 
     Msvd=sum(NW(:)*NL(:))*Ssvd               !number of model parameters
     if(smoothkoef<0.d0)then       !smoothing by means of first differences
