@@ -114,7 +114,7 @@
         write(298,*);write(298,*)
         close(232)
         VRgps(k)=1.d0-sum((D(Nseis+1:Nseis+Ngps)-Dout(Nseis+1:Nseis+Ngps,k))**2)/sum(D(Nseis+1:Nseis+Ngps)**2)
-        write(485,'(I5,4E13.5)')lambdafrom+k-1,maxw/W(lambdafrom+k-1),smoothkoef,VRgps(k),M0tilde
+        write(485,'(I5,5E13.5)')lambdafrom+k-1,maxw/W(lambdafrom+k-1),smoothkoef,VRgps(k),M0tilde,relatweightGPS
       enddo
     endif
 
