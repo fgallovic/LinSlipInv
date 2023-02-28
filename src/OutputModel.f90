@@ -50,32 +50,6 @@
 
     if(smoothkoef>0.d0)write(*,*)'  (RMS of covariance constraint ',sqrt(sum(Dout(Nseis+Ngps+2:Nseis+Ngps+1+Nsmooth,1)**2)/dble(Nsmooth))/abs(smoothkoef),')'
 
-    if(NRgps>0)then
-      open(232,FILE='stations-GPS.dat',action='read')
-      open(292,file='stations-GPS-data.dat')
-      do i=1,NRgps
-        read(232,*)stalocGPS(1:2)
-        D(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3)=D(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3)*sigmaGPS(1:3,i)
-        write(292,'(5E13.5)')stalocGPS(1:2),D(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3)
-      enddo
-      close(232)
-      close(292)
-      open(485,FILE='varredGPS.dat')
-      open(298,FILE='mtildeslip2D-sGPS.out')
-      do k=1,lambdanum
-        open(232,FILE='stations-GPS.dat',action='read')
-        do i=1,NRgps
-          read(232,*)stalocGPS(1:2)
-          Dout(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3,k)=Dout(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3,k)*sigmaGPS(1:3,i)
-          write(298,'(5E13.5)')stalocGPS(1:2),Dout(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3,k)
-        enddo
-        write(298,*);write(298,*)
-        close(232)
-        VRgps(k)=1.d0-sum((D(Nseis+1:Nseis+Ngps)-Dout(Nseis+1:Nseis+Ngps,k))**2)/sum(D(Nseis+1:Nseis+Ngps)**2)
-        write(485,'(I5,3E13.5)')lambdafrom+k-1,maxw/W(lambdafrom+k-1),smoothkoef,VRgps(k)
-      enddo
-    endif
-
     open(296,FILE='mtildeslip2D.dat')
     open(201,FILE='mtilde1d.dat')
     open(202,FILE='mtilde.gnuplot.dat')
@@ -116,6 +90,33 @@
     enddo
     write(*,*)'  (scalar moment ',M0tilde,')'
     write(*,*)'  (scalar moment discrepancy ',Mfix/M0tilde*100.d0,'%)'
+
+
+    if(NRgps>0)then
+      open(232,FILE='stations-GPS.dat',action='read')
+      open(292,file='stations-GPS-data.dat')
+      do i=1,NRgps
+        read(232,*)stalocGPS(1:2)
+        D(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3)=D(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3)*sigmaGPS(1:3,i)
+        write(292,'(5E13.5)')stalocGPS(1:2),D(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3)
+      enddo
+      close(232)
+      close(292)
+      open(485,FILE='varredGPS.dat')
+      open(298,FILE='mtildeslip2D-sGPS.out')
+      do k=1,lambdanum
+        open(232,FILE='stations-GPS.dat',action='read')
+        do i=1,NRgps
+          read(232,*)stalocGPS(1:2)
+          Dout(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3,k)=Dout(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3,k)*sigmaGPS(1:3,i)
+          write(298,'(5E13.5)')stalocGPS(1:2),Dout(Nseis+(i-1)*3+1:Nseis+(i-1)*3+3,k)
+        enddo
+        write(298,*);write(298,*)
+        close(232)
+        VRgps(k)=1.d0-sum((D(Nseis+1:Nseis+Ngps)-Dout(Nseis+1:Nseis+Ngps,k))**2)/sum(D(Nseis+1:Nseis+Ngps)**2)
+        write(485,'(I5,4E13.5)')lambdafrom+k-1,maxw/W(lambdafrom+k-1),smoothkoef,VRgps(k),M0tilde
+      enddo
+    endif
 
     open(299,FILE='srcmod.dat')
     call date_and_time(VALUES=date)
