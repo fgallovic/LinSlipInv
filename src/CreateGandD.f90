@@ -113,6 +113,7 @@
 
 ! Scalar moment constraint
     if(fixM0weight>0.d0)write(*,*)'  (constraint on M0 applied)'
+    write(*,*)norminput
     G(Nseis+Ngps+1,:)=1.d0/norminput*fixM0weight
     D(Nseis+Ngps+1)=1.d0*fixM0weight
 
@@ -662,6 +663,7 @@
 
 ! CMspace
 !    CMspace(:,:)=1.d0   ! spatialy independent
+write(*,*)'POZOR, hladim IZOTROPNE!!!'
     do i=1,NLFFT
       if(i>NLFFT/2)then
         kL=-dble(NLFFT-i+1)*dkL
@@ -674,7 +676,8 @@
         else
           kW=dble(j-1)*dkW
         endif
-        CMspace(i,j)=1.d0/(1.d0+(kL*leng(kk))**2+(kW*widt(kk))**2)
+!        CMspace(i,j)=1.d0/(1.d0+(kL*leng(kk))**2+(kW*widt(kk))**2)
+        CMspace(i,j)=1.d0/(1.d0+(kL*widt(kk)*smoothaspectratio)**2+(kW*widt(kk))**2)
       enddo
     enddo
     

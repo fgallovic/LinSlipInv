@@ -13,7 +13,7 @@
       INTEGER,ALLOCATABLE,DIMENSION(:):: fcsta
       INTEGER nfc
       REAL*8 dt,df
-      REAL*8 smoothkoef,smoothkoefGF,relatweightGPS,lambdalim,maxw
+      REAL*8 smoothkoef,smoothkoefGF,relatweightGPS,lambdalim,maxw,smoothaspectratio
       REAL*8 norminput,normdatGPS
       CHARACTER*256 inputtffile
       INTEGER syntdata,syntdatai,syntdataj,compweights,fixM0weight,slipweight
@@ -100,7 +100,7 @@
     if(syntdata==1 )read(10,*)syntdatai,syntdataj
     if(syntdata==-1)read(10,*)inputtffile
     read(10,*)
-    read(10,*)smoothkoef,smoothkoefGF,relatweightGPS,fixM0weight,slipweight
+    read(10,*)smoothkoef,smoothkoefGF,relatweightGPS,fixM0weight,slipweight,smoothaspectratio
     read(10,*)
     read(10,*)compweights
     read(10,*)

@@ -50,6 +50,7 @@
 
     if(smoothkoef>0.d0)write(*,*)'  (RMS of covariance constraint ',sqrt(sum(Dout(Nseis+Ngps+2:Nseis+Ngps+1+Nsmooth,1)**2)/dble(Nsmooth))/abs(smoothkoef),')'
 
+
     open(296,FILE='mtildeslip2D.dat')
     open(201,FILE='mtilde1d.dat')
     open(202,FILE='mtilde.gnuplot.dat')
@@ -91,7 +92,6 @@
     write(*,*)'  (scalar moment ',M0tilde,')'
     write(*,*)'  (scalar moment discrepancy ',Mfix/M0tilde*100.d0,'%)'
 
-
     if(NRgps>0)then
       open(232,FILE='stations-GPS.dat',action='read')
       open(292,file='stations-GPS-data.dat')
@@ -114,9 +114,10 @@
         write(298,*);write(298,*)
         close(232)
         VRgps(k)=1.d0-sum((D(Nseis+1:Nseis+Ngps)-Dout(Nseis+1:Nseis+Ngps,k))**2)/sum(D(Nseis+1:Nseis+Ngps)**2)
-        write(485,'(I5,5E13.5)')lambdafrom+k-1,maxw/W(lambdafrom+k-1),smoothkoef,VRgps(k),M0tilde,relatweightGPS
+        write(485,'(I5,6E13.5)')lambdafrom+k-1,maxw/W(lambdafrom+k-1),smoothkoef,VRgps(k),M0tilde,relatweightGPS,smoothaspectratio
       enddo
     endif
+
 
     open(299,FILE='srcmod.dat')
     call date_and_time(VALUES=date)
