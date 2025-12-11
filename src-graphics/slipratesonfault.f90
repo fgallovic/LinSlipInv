@@ -48,6 +48,8 @@
     open(215,FILE='slipratesonfault.grid.dat')
     open(211,FILE='slipratesonfault.plot.gp')
     open(292,FILE='kinemati_parameters.dat')
+    waterlevel=0.
+    
     do kk=1,NSeg
       allocate(mtilde(NT,NL(kk),NW(kk)),CM(NT,NL(kk),NW(kk)),cumulmtilde(NT),rupttime(NL(kk),NW(kk)),risetime(NL(kk),NW(kk)),peaktime(NL(kk),NW(kk)))
       L(kk)=L(kk)/1.d3
